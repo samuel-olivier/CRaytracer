@@ -12,13 +12,13 @@ typedef union
 	float 	xyz[3];
 }			Vec3;
 
-Vec3	*Vec3_new(float x, float y, float z);
+Vec3	*Vec3_new();
+Vec3	*Vec3_create(float x, float y, float z);
 void	Vec3_delete(Vec3 *this);
-
+Vec3	*Vec3_init(Vec3 *this);
 Vec3	*Vec3_clone(Vec3 *this);
 Vec3	*Vec3_copy(Vec3 *this, Vec3 *from);
 
-Vec3	*Vec3_init(Vec3 *this);
 Vec3	*Vec3_setValues(Vec3 *this, float x, float y, float z);
 
 Vec3	*Vec3_add(Vec3 *this, Vec3 *other);
@@ -41,5 +41,6 @@ Vec3	*Vec3_negate(Vec3 *this);
 Vec3	*Vec3_normalize(Vec3 *this);
 float	Vec3_length(Vec3 *this);
 float	Vec3_lengthSquared(Vec3 *this);
+float	Vec3_distanceTo(Vec3 *this, Vec3 *point);
 
 #endif

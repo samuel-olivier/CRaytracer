@@ -12,12 +12,13 @@ typedef enum
 
 typedef struct
 {
-	Vec3	*position;
-	Vec3	*direction;
+	Vec3	origin;
+	Vec3	direction;
 	RayType	type;
 }			Ray;
 
-Ray		*Ray_new(Vec3 *position, Vec3 *direction, RayType type);
+Ray		*Ray_new(Vec3 *origin, Vec3 *direction, RayType type);
 void	Ray_delete(Ray *this);
+Ray		*Ray_init(Ray *this, Vec3 *origin, Vec3 *direction, RayType type);
 
 #endif

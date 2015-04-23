@@ -1,13 +1,26 @@
 #ifndef __OBJECT__
 #define __OBJECT__
 
-typedef int	(*IntersectFunc)(Ray *ray, Intersection *hit);
+#include "Ray.h"
+#include "Intersection.h"
 
-typedef struct
+struct sObject;
+
+typedef int		(*IntersectFunc)(struct sObject *this, Ray *ray, Intersection *hit);
+typedef void	(*DeleteFunc)(void *this);
+
+typedef struct		sObject
 {
-	IntersectFunc	intersectPtr;
 	Material		*material;
 	void			*data;
+
+	IntersectFunc	intersectPtr;
+	DeleteFunc		deletePtr;
 }					Object;
+
+Object	*Object_new();
+void	Object_delete(Object *this);
+
+int		Object_intersect(Object *this, Ray *ray, Intersection *hit);
 
 #endif

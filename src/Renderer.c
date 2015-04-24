@@ -43,6 +43,7 @@ void		Renderer_render(Renderer *this, XContext *context)
 
 			Intersection_init(&hit);
 			Integrator_compute(this->integrator, this->scene, &ray, &hit);
+			Color_clamp(&hit.shade);
 			setPixel(this, 0, x, y, &hit.shade);
 		}
 	}

@@ -29,7 +29,7 @@ float	PointLight_illuminate(Light *this, Vec3 *pos, Color *col, Vec3 *toLight, V
 
     *ltPos = pointLight->position;
     Vec3_subVectors(toLight, ltPos, pos);
-    float bright = pointLight->intensity; // / Vec3_lengthSquared(toLight);
+    float bright = pointLight->intensity / Vec3_lengthSquared(toLight);
     Vec3_normalize(toLight);
     *col = pointLight->color;
     return bright;

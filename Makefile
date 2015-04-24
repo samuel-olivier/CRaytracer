@@ -19,6 +19,7 @@ SRC	= src/Camera.c \
 	  src/main.c \
 	  src/Mat4x4.c \
 	  src/Material.c \
+	  src/Mesh.c \
 	  src/Object.c \
 	  src/Pathtracing.c \
 	  src/PointLight.c \
@@ -27,9 +28,11 @@ SRC	= src/Camera.c \
 	  src/Renderer.c \
 	  src/Scene.c \
 	  src/Sphere.c \
+	  src/Triangle.c \
 	  src/Utils.c \
 	  src/Vec2.c \
 	  src/Vec3.c \
+	  src/Vertex.c \
 	  src/XContext.c \
 
 OBJ	= $(SRC:.c=.o)

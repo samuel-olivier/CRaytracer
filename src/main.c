@@ -5,6 +5,7 @@
 #include "XContext.h"
 #include "Renderer.h"
 #include "Sphere.h"
+#include "Mesh.h"
 #include "LambertMaterial.h"
 #include "PointLight.h"
 
@@ -18,9 +19,9 @@ Scene	*createScene()
 	scene->camera = Camera_new();
 	Camera_setValues(scene->camera, 40.f, (float)WINDOW_WIDTH / WINDOW_HEIGHT);
 	Vec3	cPosition;
-	Vec3_setValues(&cPosition, 0.f, 0.f, 2.f);
+	Vec3_setValues(&cPosition, -1.5f, 1.5f, 2.f);
 	Vec3	target;
-	Vec3_setValues(&target, 0.f, 0.f, 0.f);
+	Vec3_setValues(&target, 0.f, 0.f, -1.f);
 	Vec3	up;
 	Vec3_setValues(&up, 0.f, 1.f, 0.f);
 	Camera_lookAt(scene->camera, &cPosition, &target, &up);
@@ -28,20 +29,32 @@ Scene	*createScene()
 
 	Vec3	sPosition;
 	Object *sph = Sphere_new(Vec3_init(&sPosition), 0.5f);
-
 	Color		sCol;
-	Color_setValues(&sCol, 0.8f, 0.0f, 0.0f, 1.f);
+	Color_setValues(&sCol, 0.95f, 0.0f, 0.0f, 1.f);
 	Material	*sMat = LambertMaterial_new(&sCol);
 	sph->material = sMat;
+	Scene_addObject(scene, sph);
+
+	Object *bPlane = Mesh_new();
+	Mesh_makeRectangle(bPlane, (Vec3[4]){
+		{-1.f, -1.f, -1.f},
+		{-1.f, 1.f, -1.f},
+		{1.f, 1.f, -1.f},
+		{1.f, -1.f, -1.f}
+	});
+	Color		bpCol;
+	Color_setValues(&bpCol, 0.f, 0.95f, 0.f, 1.f);
+	Material	*bpMat = LambertMaterial_new(&bpCol);
+	bPlane->material = bpMat;
+	Scene_addObject(scene, bPlane);
 
 	Vec3	lPos;
-	Vec3_setValues(&lPos, 0.5f, 1.f, 2.f);
+	Vec3_setValues(&lPos, 0.0f, 0.f, 2.f);
 	Color	lCol;
 	Color_setValues(&lCol, 1.f, 1.f, 1.f, 1.f);
-	Light	*lgt = PointLight_new(&lPos, &lCol, 2.f);
-
-	Scene_addObject(scene, sph);
+	Light	*lgt = PointLight_new(&lPos, &lCol, 3.0f);
 	Scene_addLight(scene, lgt);
+
 	return scene;
 }
 

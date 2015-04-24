@@ -57,7 +57,6 @@ int		Sphere_intersect(Object *this, Ray *ray, Intersection *hit)
 		Vec3_addScaledVectors(&hit->position, &ray->origin, &ray->direction, dist);
 		hit->material = this->material;
 		Vec3_subVectors(&hit->normal, &hit->position, &sphere->position);
-		Vec3_scale(&hit->normal, sphere->radius);
 		// printf("Intersect %f %f,%f,%f %f\n", dist, ray->direction.x, ray->direction.y, ray->direction.z, sphere->radius);
 		return 1;
 	}

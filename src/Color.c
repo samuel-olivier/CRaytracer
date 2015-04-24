@@ -147,7 +147,7 @@ Color	*Color_normalize(Color *this)
 	return Color_scale(this, 1.f / m);
 }
 
-Color	*Color_trunc(Color *this)
+Color	*Color_clamp(Color *this)
 {
 	return Color_setValues(this,
 		clampf(this->r, 0.f, 1.f),

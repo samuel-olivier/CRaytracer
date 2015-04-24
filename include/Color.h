@@ -40,7 +40,7 @@ Color	*Color_scaleColor(Color *this, Color *other, float factor);
 Color	*Color_addScaledColors(Color *this, Color *a, Color *b, float factor);
 
 Color	*Color_normalize(Color *this);
-Color	*Color_trunc(Color *this);
+Color	*Color_clamp(Color *this);
 
 void	Color_dump(Color *this, char *prefix);
 

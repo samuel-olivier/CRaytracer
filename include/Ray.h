@@ -7,7 +7,8 @@ typedef enum
 {
 	Primary,
 	Shadow,
-	Reflected
+	Reflected,
+	RayNone
 }			RayType;
 
 typedef struct
@@ -15,6 +16,7 @@ typedef struct
 	Vec3	origin;
 	Vec3	direction;
 	RayType	type;
+	int		depth;
 }			Ray;
 
 Ray		*Ray_new(Vec3 *origin, Vec3 *direction, RayType type);

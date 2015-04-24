@@ -17,5 +17,6 @@ Ray		*Ray_init(Ray *this, Vec3 *origin, Vec3 *direction, RayType type)
 	this->origin = *origin;
 	this->direction = *direction;
 	this->type = type;
+	this->depth = 0;
 	return this;
 }

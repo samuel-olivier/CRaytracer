@@ -6,12 +6,12 @@
 static ListItem	*List_newItem(void *data);
 
 
-List	new_List()
+List	List_new()
 {
 	return NULL;
 }
 
-void	delete_List(List *this, List_deleteFunction funcPtr)
+void	List_delete(List *this, List_deleteFunction funcPtr)
 {
 	ListItem	*it = *this;
 	ListItem	*current = NULL;

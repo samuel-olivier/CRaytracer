@@ -12,8 +12,8 @@ typedef void 		(*List_foreachFunction)(int idx, void *data, void *param);
 typedef int 		(*List_removeIfFunction)(int idx, void *data, void *param);
 typedef void 		(*List_deleteFunction)(void *data);
 
-List	new_List();
-void	delete_List(List *this, List_deleteFunction funcPtr);
+List	List_new();
+void	List_delete(List *this, List_deleteFunction funcPtr);
 
 void	List_append(List *this, void *data);
 void	List_prepend(List *this, void *data);

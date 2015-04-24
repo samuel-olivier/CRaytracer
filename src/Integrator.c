@@ -37,9 +37,9 @@ Integrator	*Integrator_init(Integrator *this, IntegratorType type)
 	this->computePtr = NULL;
 }
 
-void		Integrator_compute(Integrator *this, Ray *ray, Intersection *hit)
+void		Integrator_compute(Integrator *this, Scene *scene, Ray *ray, Intersection *hit)
 {
 	if (this->computePtr != NULL) {
-		this->computePtr(ray, hit);
+		this->computePtr(scene, ray, hit);
 	}
 }

@@ -8,6 +8,8 @@ typedef enum
 	Primary,
 	Shadow,
 	Reflected,
+	Transmitted,
+	Diffused
 	RayNone
 }			RayType;
 

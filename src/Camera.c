@@ -57,6 +57,7 @@ void    Camera_lookAt(Camera *this, Vec3 *position, Vec3 *target, Vec3 *up)
     Mat4x4_setColumnVec3(&this->matrix, 1, &b);
     Mat4x4_setColumnVec3(&this->matrix, 2, &c);
     Mat4x4_setColumnVec3(&this->matrix, 3, &d);
+    Camera_setValues(this, radiansToDegrees(this->verticalFOV), this->aspectRatio);
 }
 
 void    Camera_setValues(Camera *this, float verticalFOV, float aspectRatio)

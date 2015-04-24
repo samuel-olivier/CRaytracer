@@ -5,11 +5,11 @@
 
 typedef enum
 {
-	Primary,
-	Shadow,
-	Reflected,
-	Transmitted,
-	Diffused
+	PrimaryRay,
+	ShadowRay,
+	ReflectedRay,
+	TransmittedRay,
+	DiffusedRay,
 	RayNone
 }			RayType;
 

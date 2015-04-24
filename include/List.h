@@ -1,11 +1,16 @@
 #ifndef __LIST__
 #define __LIST__
 
+#include <stdlib.h>
+
 typedef struct		s_ListItem
 {
   void				*data;
   struct s_ListItem	*next;
 }					ListItem;
+
+#define LIST_FOREACH(list, it) \
+	for (ListItem *it = (list); it; it = it->next)
 
 typedef ListItem* 	List;
 typedef void 		(*List_foreachFunction)(int idx, void *data, void *param);

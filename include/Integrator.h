@@ -3,10 +3,11 @@
 
 #include "Ray.h"
 #include "Intersection.h"
+#include "Scene.h"
 
 typedef enum 	{Raytracing, Pathtracing, IntegratorNone} IntegratorType;
 
-typedef void	(ComputeFct*)(Scene *scene, Ray *ray, Intersection *hit);
+typedef void	(*ComputeFct)(Scene *scene, Ray *ray, Intersection *hit);
 
 typedef struct
 {

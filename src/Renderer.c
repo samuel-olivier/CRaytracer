@@ -1,8 +1,9 @@
 #include "Renderer.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
-static void		setPixel(Renderer *this, int x, int y, Color *shade);
+static void		setPixel(Renderer *this, int sampleNumber, int x, int y, Color *shade);
 static void		initImage(Renderer *this);
 
 Renderer	*Renderer_new()
@@ -20,41 +21,57 @@ Renderer	*Renderer_init(Renderer *this)
 	this->scene = NULL;
 	this->integrator = NULL;
 	this->output = NULL;
+	return this;
 }
 
-void		Renderer_render(Renderer *this)
+void		Renderer_render(Renderer *this, XContext *context)
 {
 	Color			fill;
 	Intersection	hit;
 	Ray				ray;
 
 	Color_init(&fill);
-	initImage
+	initImage(this);
 	for (int y = 0; y < this->output->height; ++y) {
 		for (int x = 0; x < this->output->width; ++x) {
-			Camera_ray(this->scene->camera, (float)x + 0.5f, -(float)y + 0.5f, ray);
-			ray.type = Primary;
+			float xF = ((float)x + 0.5f) / this->output->width;
+			float yF = ((float)y + 0.5f) / this->output->height;
+
+			Camera_ray(this->scene->camera, xF, -yF, &ray);
+			ray.type = PrimaryRay;
 			ray.depth = 0;
 
 			Intersection_init(&hit);
-            Integrator_compute(this->integrator, &ray, &hit);
-            setPixel(this, x, y, &hit.color);
-        }
+			Integrator_compute(this->integrator, this->scene, &ray, &hit);
+			setPixel(this, 0, x, y, &hit.shade);
+		}
+	}
+	printf("Sample rendered\n");
+	Renderer_flushOutput(this);
+	Image_putToWindow(this->output, context, 0, 0);
+}
+
+void		Renderer_flushOutput(Renderer *this)
+{
+	int idx;
+
+	for (int y = 0; y < this->output->height; ++y) {
+		for (int x = 0; x < this->output->width; ++x) {
+			idx = y * this->output->width + x;
+			Image_putPixel(this->output, x, y, &this->image[idx]);
+		}
 	}
 }
 
-void		Renderer_flushOutput(Renderer *this);
-
 static void		setPixel(Renderer *this, int sampleNumber, int x, int y, Color *shade)
 {
-	int i = y * this->output->width + x;
-    float f = 1.0f / (sampleNumber + 1.0f);
-    Color c = _imageColors[idx];
-    c.Scale(1.0f - f);
-    c.AddScaled(color, f);
-    _imageColors[idx] = c;
-    _image.setPixel(x, y, c.ToInt());	Color_scale(&this->image[i], sampleNumber);
-	Color_scale()
+	int idx = y * this->output->width + x;
+	float f = 1.0f / (sampleNumber + 1.0f);
+	Color c = this->image[idx];
+	Color_scale(&c, 1.0f - f);
+	Color_copy(&this->image[idx], shade);
+	Color_scale(&this->image[idx], f);
+	Color_add(&this->image[idx], &c);
 }
 
 static void		initImage(Renderer *this)

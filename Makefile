@@ -8,20 +8,29 @@ CFLAGS	= -W -Wall -I include -std=c11 -g -D _BSD_SOURCE
 
 LDFLAGS	= -lmlx -lXext -lX11 -lm
 
-SRC	= src/main.c \
-	  src/Vec3.c \
-	  src/Vec2.c \
-	  src/Mat4x4.c \
+SRC	= src/Camera.c \
 	  src/Color.c \
-	  src/Utils.c \
-	  src/List.c \
-	  src/XContext.c \
 	  src/Image.c \
-	  src/Object.c \
-	  src/Sphere.c \
+	  src/Integrator.c \
 	  src/Intersection.c \
+	  src/LambertMaterial.c \
+	  src/Light.c \
+	  src/List.c \
+	  src/main.c \
+	  src/Mat4x4.c \
+	  src/Material.c \
+	  src/Object.c \
+	  src/Pathtracing.c \
+	  src/PointLight.c \
 	  src/Ray.c \
-	  src/Camera.c \
+	  src/Raytracing.c \
+	  src/Renderer.c \
+	  src/Scene.c \
+	  src/Sphere.c \
+	  src/Utils.c \
+	  src/Vec2.c \
+	  src/Vec3.c \
+	  src/XContext.c \
 
 OBJ	= $(SRC:.c=.o)
 

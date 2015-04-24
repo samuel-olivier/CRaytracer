@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 Vec3	*Vec3_new()
 {
@@ -66,6 +67,11 @@ Vec3	*Vec3_scale(Vec3 *this, float factor)
 	return Vec3_scaleVector(this, this, factor);
 }
 
+Vec3	*Vec3_addScaled(Vec3 *this, Vec3 *other, float factor)
+{
+	return Vec3_addScaledVectors(this, this, other, factor);
+}
+
 Vec3	*Vec3_addVectors(Vec3 *this, Vec3 *a, Vec3 *b)
 {
 	return Vec3_setValues(this, a->x + b->x, a->y + b->y, a->z + b->z);
@@ -89,6 +95,11 @@ Vec3	*Vec3_divVectors(Vec3 *this, Vec3 *a, Vec3 *b)
 Vec3	*Vec3_scaleVector(Vec3 *this, Vec3 *other, float factor)
 {
 	return Vec3_setValues(this, other->x * factor, other->y * factor, other->z * factor);
+}
+
+Vec3	*Vec3_addScaledVectors(Vec3 *this, Vec3 *a, Vec3 *b, float factor)
+{
+	return Vec3_setValues(this, a->x + b->x * factor, a->y + b->y * factor, a->z + b->z * factor);
 }
 
 float	Vec3_dot(Vec3 *this, Vec3 *other)
@@ -134,4 +145,9 @@ float	Vec3_distanceTo(Vec3 *this, Vec3 *point)
 	Vec3	vec;
 
 	return Vec3_length(Vec3_subVectors(&vec, this, point));
+}
+
+void	Vec3_dump(Vec3 *this, char *prefix)
+{
+	printf("[DEBUG][Vec3] %s : (%f %f %f)\n", prefix, this->x, this->y, this->z);
 }

@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 #include "Utils.h"
 
@@ -83,6 +84,11 @@ Color	*Color_scale(Color *this, float factor)
 	return Color_scaleColor(this, this, factor);
 }
 
+Color	*Color_addScaled(Color *this, Color *other, float factor)
+{
+	return Color_addScaledColors(this, this, other, factor);
+}
+
 Color	*Color_addColors(Color *this, Color *a, Color *b)
 {
 	return Color_setValues(this,
@@ -128,6 +134,12 @@ Color	*Color_scaleColor(Color *this, Color *other, float factor)
 		other->a * factor);
 }
 
+Color	*Color_addScaledColors(Color *this, Color *a, Color *b, float factor)
+{
+	return Color_setValues(this, a->r + b->r * factor, a->g + b->g * factor, a->b + b->b * factor, a->a + b->a * factor);
+}
+
+
 Color	*Color_normalize(Color *this)
 {
 	float m = maxf(this->r, maxf(this->g, maxf(this->b, this->a)));
@@ -142,4 +154,9 @@ Color	*Color_trunc(Color *this)
 		clampf(this->g, 0.f, 1.f),
 		clampf(this->b, 0.f, 1.f),
 		clampf(this->a, 0.f, 1.f));
+}
+
+void	Color_dump(Color *this, char *prefix)
+{
+	printf("[DEBUG][Color] %s : (%f %f %f %f)\n", prefix, this->r, this->g, this->b, this->a);
 }

@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 Vec2	*Vec2_new()
 {
@@ -120,4 +121,9 @@ float	Vec2_distanceTo(Vec2 *this, Vec2 *point)
 	Vec2	vec;
 
 	return Vec2_length(Vec2_subVectors(&vec, this, point));
+}
+
+void	Vec2_dump(Vec2 *this, char *prefix)
+{
+	printf("[DEBUG][Vec2] %s : (%f %f)\n", prefix, this->x, this->y);
 }

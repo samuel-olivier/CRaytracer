@@ -30,14 +30,18 @@ Color	*Color_sub(Color *this, Color *other);
 Color	*Color_mul(Color *this, Color *other);
 Color	*Color_div(Color *this, Color *other);
 Color	*Color_scale(Color *this, float factor);
+Color	*Color_addScaled(Color *this, Color *other, float factor);
 
 Color	*Color_addColors(Color *this, Color *a, Color *b);
 Color	*Color_subColors(Color *this, Color *a, Color *b);
 Color	*Color_mulColors(Color *this, Color *a, Color *b);
 Color	*Color_divColors(Color *this, Color *a, Color *b);
 Color	*Color_scaleColor(Color *this, Color *other, float factor);
+Color	*Color_addScaledColors(Color *this, Color *a, Color *b, float factor);
 
 Color	*Color_normalize(Color *this);
 Color	*Color_trunc(Color *this);
+
+void	Color_dump(Color *this, char *prefix);
 
 #endif

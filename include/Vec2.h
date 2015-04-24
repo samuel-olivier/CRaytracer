@@ -40,4 +40,6 @@ float	Vec2_length(Vec2 *this);
 float	Vec2_lengthSquared(Vec2 *this);
 float	Vec2_distanceTo(Vec2 *this, Vec2 *point);
 
+void	Vec2_dump(Vec2 *this, char *prefix);
+
 #endif

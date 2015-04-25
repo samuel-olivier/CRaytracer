@@ -4,13 +4,15 @@ CC	= gcc
 
 RM	= rm -f
 
-CFLAGS	= -W -Wall -I include -std=c11 -g -D _BSD_SOURCE
+CFLAGS	= -W -Wall -I include -std=c11 -g -D _BSD_SOURCE -I /usr/local/include/
 
 LDFLAGS	= -lmlx -lXext -lX11 -lm
 
 SRC	= src/Camera.c \
 	  src/Color.c \
+	  src/DirectionalLight.c \
 	  src/Image.c \
+	  src/Instance.c \
 	  src/Integrator.c \
 	  src/Intersection.c \
 	  src/LambertMaterial.c \

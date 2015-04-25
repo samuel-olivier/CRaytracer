@@ -12,7 +12,6 @@ void	Raytracing_compute(Scene *scene, Ray *ray, Intersection *hit)
 		if (hit->material == NULL) {
 			return ;
 		}
-		Vec3_normalize(&hit->normal);
 		if (Vec3_dot(&hit->normal, &ray->direction) > 0) {
 			Vec3_negate(&hit->normal);
 		}
@@ -33,6 +32,8 @@ void	Raytracing_compute(Scene *scene, Ray *ray, Intersection *hit)
 				}
 			}
 		}
+	} else {
+		hit->shade = scene->sky;
 	}
 }
 

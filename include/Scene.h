@@ -7,12 +7,14 @@
 #include "Intersection.h"
 #include "Object.h"
 #include "Light.h"
+#include "Color.h"
 
 typedef struct
 {
 	Camera		*camera;
 	List		objects;
 	List		lights;
+	Color		sky;
 }				Scene;
 
 Scene	*Scene_new();

@@ -16,6 +16,7 @@ void	Mesh_delete(Mesh *this);
 
 int		Mesh_intersect(Object *this, Ray *ray, Intersection *hit);
 
-void	Mesh_makeRectangle(Object *this, Vec3 points[4]);
+void	Mesh_makeRectangle(Object *this, float x, float y);
+void	Mesh_makeBox(Object *this, float x, float y, float z);
 
 #endif

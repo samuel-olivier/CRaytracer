@@ -18,6 +18,7 @@ Scene	*Scene_init(Scene *this)
 	this->camera = NULL;
 	this->objects = List_new();
 	this->lights = List_new();
+	Color_setValues(&this->sky, 0.f, 0.f, 0.f, 0.f);
 	return this;
 }
 

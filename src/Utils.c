@@ -1,7 +1,5 @@
 #include "Utils.h"
 
-#include <math.h>
-
 float	minf(float a, float b)
 {
 	return a < b ? a : b;

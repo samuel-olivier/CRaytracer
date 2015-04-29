@@ -4,9 +4,9 @@ CC	= gcc
 
 RM	= rm -f
 
-CFLAGS	= -W -Wall -I include -std=c11 -g -D _BSD_SOURCE -I /usr/local/include/
+CFLAGS	= -W -Wall -I include -std=c11 -O2 -I /usr/local/include/
 
-LDFLAGS	= -lmlx -lXext -lX11 -lm
+LDFLAGS	= -lmlx -lXext -lX11 -lm -lpthread
 
 SRC	= src/Camera.c \
 	  src/Color.c \
@@ -29,7 +29,11 @@ SRC	= src/Camera.c \
 	  src/Raytracing.c \
 	  src/Renderer.c \
 	  src/Scene.c \
+	  src/Scene1.c \
+	  src/Scene2.c \
 	  src/Sphere.c \
+	  src/Thread.c \
+	  src/Time.c \
 	  src/Triangle.c \
 	  src/Utils.c \
 	  src/Vec2.c \

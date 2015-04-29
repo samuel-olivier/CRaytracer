@@ -58,7 +58,15 @@ int		Sphere_intersect(Object *this, Ray *ray, Intersection *hit)
 		hit->material = this->material;
 		Vec3_subVectors(&hit->normal, &hit->position, &sphere->position);
 		Vec3_normalize(&hit->normal);
-		// printf("Intersect %f %f,%f,%f %f\n", dist, ray->direction.x, ray->direction.y, ray->direction.z, sphere->radius);
+		Vec3	up;
+		Vec3_setValues(&up, 0.f, 1.f, 0.f);
+		Vec3_crossVectors(&hit->u, &up, &hit->normal);
+		if (Vec3_lengthSquared(&hit->u) < EPSILON) {
+			Vec3_setValues(&hit->u, 1.f, 0.f, 0.f);
+		} else {
+			Vec3_normalize(&hit->u);
+		}
+		Vec3_crossVectors(&hit->v, &hit->normal, &hit->u);
 		return 1;
 	}
 	return 0;

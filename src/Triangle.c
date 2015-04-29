@@ -67,6 +67,16 @@ int			Triangle_intersect(Object *this, Ray *ray, Intersection *hit)
 		Vec3_addScaled(&hit->normal, &triangle->v1->normal, alpha);
 		Vec3_addScaled(&hit->normal, &triangle->v2->normal, beta);
 		Vec3_normalize(&hit->normal);
+		Vec3_init(&hit->u);
+		Vec3_addScaled(&hit->u, &triangle->v0->u, (1.f - alpha - beta));
+		Vec3_addScaled(&hit->u, &triangle->v1->u, alpha);
+		Vec3_addScaled(&hit->u, &triangle->v2->u, beta);
+		Vec3_normalize(&hit->u);
+		Vec3_init(&hit->v);
+		Vec3_addScaled(&hit->v, &triangle->v0->v, (1.f - alpha - beta));
+		Vec3_addScaled(&hit->v, &triangle->v1->v, alpha);
+		Vec3_addScaled(&hit->v, &triangle->v2->v, beta);
+		Vec3_normalize(&hit->v);
 		hit->material = this->material;
 		Vec3_addScaledVectors(&hit->position, &ray->origin, &ray->direction, t);
 		return 1;

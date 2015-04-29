@@ -2,8 +2,8 @@
 #define __RENDERER__
 
 #include "Scene.h"
-#include "XContext.h"
 #include "Integrator.h"
+#include "Image.h"
 
 typedef struct
 {
@@ -17,7 +17,7 @@ Renderer	*Renderer_new();
 void		Renderer_delete(Renderer *this);
 Renderer	*Renderer_init(Renderer *this);
 
-void		Renderer_render(Renderer *this, XContext *context);
+void		Renderer_render(Renderer *this);
 void		Renderer_flushOutput(Renderer *this);
 
 #endif

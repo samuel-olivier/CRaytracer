@@ -24,7 +24,7 @@ Renderer	*Renderer_init(Renderer *this)
 	return this;
 }
 
-void		Renderer_render(Renderer *this, XContext *context)
+void		Renderer_render(Renderer *this)
 {
 	Color			fill;
 	Intersection	hit;
@@ -32,24 +32,28 @@ void		Renderer_render(Renderer *this, XContext *context)
 
 	Color_init(&fill);
 	initImage(this);
-	for (int y = 0; y < this->output->height; ++y) {
-		for (int x = 0; x < this->output->width; ++x) {
-			float xF = ((float)x + 0.5f) / this->output->width;
-			float yF = ((float)y + 0.5f) / this->output->height;
+	for (int sampleNumber = 0;; ++sampleNumber) {
+		for (int y = 0; y < this->output->height; ++y) {
+			for (int x = 0; x < this->output->width; ++x) {
+				float xF = ((float)x + 0.5f) / this->output->width;
+				float yF = ((float)y + 0.5f) / this->output->height;
 
-			Camera_ray(this->scene->camera, xF, -yF, &ray);
-			ray.type = PrimaryRay;
-			ray.depth = 0;
+				Camera_ray(this->scene->camera, xF, -yF, &ray);
+				ray.type = PrimaryRay;
+				ray.depth = 0;
 
-			Intersection_init(&hit);
-			Integrator_compute(this->integrator, this->scene, &ray, &hit);
-			Color_clamp(&hit.shade);
-			setPixel(this, 0, x, y, &hit.shade);
+				Intersection_init(&hit);
+				Integrator_compute(this->integrator, this->scene, &ray, &hit);
+				Color_clamp(&hit.shade);
+				setPixel(this, sampleNumber, x, y, &hit.shade);
+			}
+			// if (y % (this->output->height / 30) == 0) {
+			// 	Renderer_flushOutput(this);
+			// }
 		}
+		Renderer_flushOutput(this);
 	}
 	printf("Sample rendered\n");
-	Renderer_flushOutput(this);
-	Image_putToWindow(this->output, context, 0, 0);
 }
 
 void		Renderer_flushOutput(Renderer *this)

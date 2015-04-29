@@ -107,8 +107,8 @@ void	Mat4x4_rotateX(Mat4x4 *this, float t)
 	float	sint = sinf(t);
 
 	this->m[1][1] = cost;
-	this->m[2][1] = sint;
-	this->m[1][2] = -sint;
+	this->m[1][2] = sint;
+	this->m[2][1] = -sint;
 	this->m[2][2] = cost;	
 }
 
@@ -118,8 +118,8 @@ void	Mat4x4_rotateY(Mat4x4 *this, float t)
 	float	sint = sinf(t);
 
 	this->m[0][0] = cost;
-	this->m[0][2] = sint;
-	this->m[2][0] = -sint;
+	this->m[2][0] = sint;
+	this->m[0][2] = -sint;
 	this->m[2][2] = cost;	
 }
 
@@ -129,8 +129,8 @@ void	Mat4x4_rotateZ(Mat4x4 *this, float t)
 	float	sint = sinf(t);
 
 	this->m[0][0] = cost;
-	this->m[1][0] = sint;
-	this->m[0][1] = -sint;
+	this->m[0][1] = sint;
+	this->m[1][0] = -sint;
 	this->m[1][1] = cost;	
 }
 

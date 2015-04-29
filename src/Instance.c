@@ -41,6 +41,10 @@ int		Instance_intersect(Object *this, Ray *ray, Intersection *hit)
 		Mat4x4_mapVec3(&instance->m, &hit->position, &hit->position, 1.f);
 		Mat4x4_mapVec3(&instance->m, &hit->normal, &hit->normal, 0.f);
 		Vec3_normalize(&hit->normal);
+		Mat4x4_mapVec3(&instance->m, &hit->u, &hit->u, 0.f);
+		Vec3_normalize(&hit->u);
+		Mat4x4_mapVec3(&instance->m, &hit->v, &hit->v, 0.f);
+		Vec3_normalize(&hit->v);
 		hit->hitDistance = Vec3_distanceTo(&ray->origin, &hit->position);
 		if (this->material) {
 			hit->material = this->material;

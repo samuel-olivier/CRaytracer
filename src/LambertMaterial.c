@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "Utils.h"
+
 static void		LambertMaterial_deleteMaterial(void *this);
 
 Material	*LambertMaterial_new(Color *diffuseColor)
@@ -37,13 +39,19 @@ void	LambertMaterial_computeReflectance(Material *this, Color *col, Vec3 *in, Ra
 int		LambertMaterial_sampleRay(Material *this, Ray *ray, Intersection *hit, Ray *newRay, Color *intensity)
 {
 	LambertMaterial	*lambert = this->data;
+	float s = (float)rand() / RAND_MAX;
+	float t = (float)rand() / RAND_MAX;
+	float u = 2.0f * M_PI * s;
+	float v = sqrtf(1.f - t);
 
-	(void)lambert;
+	newRay->origin = hit->position;
+	Vec3_scaleVector(&newRay->direction, &hit->normal, sqrtf(t));
+	Vec3_addScaled(&newRay->direction, &hit->u, v * cosf(u));
+	Vec3_addScaled(&newRay->direction, &hit->v, v * sinf(u));
+	*intensity = lambert->diffuseColor;
+	newRay->type = DiffusedRay;
+	return 1;
 	(void)ray;
-	(void)hit;
-	(void)newRay;
-	(void)intensity;
-	return 0;
 }
 
 static void		LambertMaterial_deleteMaterial(void *this)

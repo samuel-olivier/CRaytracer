@@ -11,6 +11,8 @@ typedef struct
 	float				hitDistance;
 	Vec3				position;
 	Vec3				normal;
+	Vec3				u;
+	Vec3				v;
 	struct sMaterial	*material;
 	Color				shade;
 }						Intersection;

@@ -3,6 +3,7 @@
 #include "Light.h"
 #include "Material.h"
 #include "Config.h"
+#include "Utils.h"
 
 static int isShaded(Scene *scene, Vec3 *hitPosition, Vec3 *toLight, Vec3 *lightPos);
 
@@ -32,6 +33,15 @@ void	Raytracing_compute(Scene *scene, Ray *ray, Intersection *hit)
 				}
 			}
 		}
+		// if (ray->depth < MAX_RECURSION_DEPTH) {
+		// 	Ray2	newRay;
+		// 	Color	intensity;
+
+		// 	Material_sampleRay(hit->material, ray, hit, &newRay, &intensity);
+		// 	if (newRay.type == ReflectedRay || newRay.type == TransmittedRay) {
+		// 		newRay.depth = ray->depth + 1;
+		// 	}
+		// }
 	} else {
 		hit->shade = scene->sky;
 	}

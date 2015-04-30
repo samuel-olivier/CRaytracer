@@ -5,6 +5,7 @@
 #include "Color.h"
 
 struct sMaterial;
+struct sObject;
 
 typedef struct
 {
@@ -15,6 +16,7 @@ typedef struct
 	Vec3				v;
 	struct sMaterial	*material;
 	Color				shade;
+	struct sObject			*object;
 }						Intersection;
 
 Intersection	*Intersection_new();

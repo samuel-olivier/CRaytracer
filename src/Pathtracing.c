@@ -10,6 +10,10 @@ static int isShaded(Scene *scene, Vec3 *hitPosition, Vec3 *toLight, Vec3 *lightP
 void	Pathtracing_compute(Scene *scene, Ray *ray, Intersection *hit)
 {
 	if (Scene_intersect(scene, ray, hit)) {
+		if (hit->object != NULL && hit->object->light != NULL) {
+			Light_intersectionColor(hit->object->light, &hit->shade);
+			return ;
+		}
 		if (hit->material == NULL) {
 			return ;
 		}
@@ -22,6 +26,7 @@ void	Pathtracing_compute(Scene *scene, Ray *ray, Intersection *hit)
 			Vec3	 	lightPos;
 			float 		bright = Light_illuminate(it->data, &hit->position, &color, &toLight, &lightPos);
 			float 		cosTheta = Vec3_dot(&toLight, &hit->normal);
+
 			if (cosTheta >= EPSILON && bright >= EPSILON) {
 				if (!SHADOW_ENABLED || !isShaded(scene, &hit->position, &toLight, &lightPos)) {
 					Color materialColor;

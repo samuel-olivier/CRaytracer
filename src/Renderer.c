@@ -52,8 +52,8 @@ void		Renderer_render(Renderer *this)
 			// }
 		}
 		Renderer_flushOutput(this);
+		printf("Sample rendered\n");
 	}
-	printf("Sample rendered\n");
 }
 
 void		Renderer_flushOutput(Renderer *this)

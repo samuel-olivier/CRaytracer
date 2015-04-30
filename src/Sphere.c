@@ -56,6 +56,7 @@ int		Sphere_intersect(Object *this, Ray *ray, Intersection *hit)
 		hit->hitDistance = dist;
 		Vec3_addScaledVectors(&hit->position, &ray->origin, &ray->direction, dist);
 		hit->material = this->material;
+		hit->object = this;
 		Vec3_subVectors(&hit->normal, &hit->position, &sphere->position);
 		Vec3_normalize(&hit->normal);
 		Vec3	up;

@@ -40,7 +40,10 @@ int	 Mesh_intersect(Object *this, Ray *ray, Intersection *hit)
 		}
 	}
 	if (success) {
-		hit->material = this->material;
+		if (this->material) {
+			hit->material = this->material;
+		}
+		hit->object = this;
 	}
 	return success;
 }

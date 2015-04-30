@@ -5,6 +5,7 @@
 #include "LambertMaterial.h"
 #include "PointLight.h"
 #include "DirectionalLight.h"
+#include "AreaLight.h"
 #include "Config.h"
 #include "Utils.h"
 
@@ -38,6 +39,10 @@ Scene	*createScene2()
 
 	Object *wall = Mesh_new();
 	Mesh_makeRectangle(wall, 2.f, 2.f);
+
+	Object *lightMesh = Mesh_new();
+	Mesh_makeRectangle(lightMesh, 0.47f, 0.38f);
+
 	Mat4x4	m;
 	Vec3	tr;
 
@@ -83,6 +88,15 @@ Scene	*createScene2()
 	right->material = rWallMat;
 	Scene_addObject(scene, right);
 
+	Object *lightInst = Instance_new(lightMesh);
+	Mat4x4_toIdentity(&m);
+	Mat4x4_rotateX(&m, M_PI / 2.f);
+	Vec3_setValues(&tr, 0.f, 1.59f, 0.f);
+	Mat4x4_translate(&m, &tr);
+	Instance_setMatrix(lightInst, &m);
+	lightInst->material = NULL;
+	Scene_addObject(scene, lightInst);
+
 	Vec3	lSphPos;
 	Vec3_setValues(&lSphPos, -0.4214f, 0.325f, -0.28f);
 	Object	*lSph = Sphere_new(&lSphPos, 0.325);
@@ -95,19 +109,16 @@ Scene	*createScene2()
 	rSph->material = oWallMat;
 	Scene_addObject(scene, rSph);
 
-	// Object *inst2 = Instance_new(box);
-	// Mat4x4_toIdentity(&m);
-	// Mat4x4_rotateY(&m, 1.f);
-	// Vec3_setValues(&tr, -1.f, 0.f, 1.f);
-	// Mat4x4_translate(&m, &tr);
-	// Instance_setMatrix(inst2, &m);
-	// Scene_addObject(scene, inst2);
-
 	Vec3	lPos;
-	Vec3_setValues(&lPos, 0.f, 1.58f, 0.f);
+	Vec3_setValues(&lPos, -0.24f, 1.58f, -0.22f);
+	Vec3	lU;
+	Vec3_setValues(&lU, 0.47f, 0.f, 0.f);
+	Vec3	lV;
+	Vec3_setValues(&lV, 0.f, 0.f, 0.38f);
 	Color	lCol;
 	Color_setValues(&lCol, 1.f, 1.0f, 1.0f, 1.f);
-	Light	*light = PointLight_new(&lPos, &lCol, 2.f);
+	Light	*light = AreaLight_new(&lCol, 3.f);
+	AreaLight_makeRectangle(light, &lPos, &lU, &lV);
 	Scene_addLight(scene, light);
 	return scene;
 }

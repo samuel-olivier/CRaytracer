@@ -7,6 +7,7 @@ Object	*Object_new()
 	Object	*this = malloc(sizeof(*this));
 
 	this->material = NULL;
+	this->light = NULL;
 	this->data = NULL;
 	this->intersectPtr = NULL;
 	this->deletePtr = NULL;

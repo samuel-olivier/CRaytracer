@@ -49,6 +49,7 @@ int		Instance_intersect(Object *this, Ray *ray, Intersection *hit)
 		if (this->material) {
 			hit->material = this->material;
 		}
+		hit->object = this;
 		return 1;
 	}
 	return 0;

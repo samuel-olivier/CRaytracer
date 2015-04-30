@@ -10,6 +10,10 @@ static int isShaded(Scene *scene, Vec3 *hitPosition, Vec3 *toLight, Vec3 *lightP
 void	Raytracing_compute(Scene *scene, Ray *ray, Intersection *hit)
 {
 	if (Scene_intersect(scene, ray, hit)) {
+		if (hit->object != NULL && hit->object->light != NULL) {
+			Light_intersectionColor(hit->object->light, &hit->shade);
+			return ;
+		}
 		if (hit->material == NULL) {
 			return ;
 		}

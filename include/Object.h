@@ -4,6 +4,7 @@
 #include "Ray.h"
 #include "Intersection.h"
 #include "Material.h"
+#include "Light.h"
 
 struct sObject;
 
@@ -13,6 +14,7 @@ typedef void	(*Object_DeleteFunc)(void *this);
 typedef struct		sObject
 {
 	Material				*material;
+	Light					*light;
 	void					*data;
 
 	Object_IntersectFunc	intersectPtr;

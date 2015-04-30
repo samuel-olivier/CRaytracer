@@ -20,6 +20,7 @@ Intersection	*Intersection_init(Intersection *this)
 	Vec3_init(&this->u);
 	Vec3_init(&this->v);
 	this->material = NULL;
+	this->object = NULL;
 	Color_init(&this->shade);
 	return this;
 }

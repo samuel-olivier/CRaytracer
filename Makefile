@@ -8,7 +8,8 @@ CFLAGS	= -W -Wall -I include -std=c11 -O2 -I /usr/local/include/
 
 LDFLAGS	= -lmlx -lXext -lX11 -lm -lpthread
 
-SRC	= src/Camera.c \
+SRC	= src/AreaLight.c \
+	  src/Camera.c \
 	  src/Color.c \
 	  src/DirectionalLight.c \
 	  src/Image.c \

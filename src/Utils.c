@@ -39,3 +39,16 @@ float	radiansToDegrees(float rad)
 {
 	return rad * 180.f / M_PI;
 }
+
+void	swap(float *a, float *b)
+{
+	float	tmp;
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+float	absf(float v)
+{
+	return v < 0 ? (-v) : v;
+}

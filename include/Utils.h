@@ -17,4 +17,8 @@ int		clamp(int value, int min, int max);
 float	degreesToRadians(float deg);
 float	radiansToDegrees(float rad);
 
+void	swap(float *a, float *b);
+
+float	absf(float v);
+
 #endif

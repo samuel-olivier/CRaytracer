@@ -27,4 +27,9 @@ Material	*Material_init(Material *this);
 void	Material_computeReflectance(Material *this, Color *col, Vec3 *in, Ray *ray, Intersection *hit);
 int		Material_sampleRay(Material *this, Ray *ray, Intersection *hit, Ray *newRay, Color *intensity);
 
+void	Material_fresnelMetal(Vec3 *d, Vec3 *n, float nt, float kt, float *intensity, Vec3 *rayDirection);
+int		Material_fresnelDielectric(Vec3 *d, Vec3 *normal, float ni, float nt, Vec3 rays[2], float intensities[2]);
+
+float	Material_cookTorrance(Vec3 *v, Vec3 *n, Vec3 *L, float F, float m);
+
 #endif

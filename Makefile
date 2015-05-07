@@ -11,6 +11,7 @@ LDFLAGS	= -lmlx -lXext -lX11 -lm -lpthread
 SRC	= src/AreaLight.c \
 	  src/Camera.c \
 	  src/Color.c \
+	  src/DielectricMaterial.c \
 	  src/DirectionalLight.c \
 	  src/Image.c \
 	  src/Instance.c \
@@ -23,6 +24,7 @@ SRC	= src/AreaLight.c \
 	  src/Mat4x4.c \
 	  src/Material.c \
 	  src/Mesh.c \
+	  src/MetalMaterial.c \
 	  src/Object.c \
 	  src/Pathtracing.c \
 	  src/PointLight.c \

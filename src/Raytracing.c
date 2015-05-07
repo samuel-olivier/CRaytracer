@@ -41,15 +41,20 @@ void	Raytracing_compute(Scene *scene, Ray *ray, Intersection *hit)
 				}
 			}
 		}
-		// if (ray->depth < MAX_RECURSION_DEPTH) {
-		// 	Ray2	newRay;
-		// 	Color	intensity;
+		if (ray->depth < MAX_RECURSION_DEPTH) {
+			Ray		newRay;
+			Color	intensity;
 
-		// 	Material_sampleRay(hit->material, ray, hit, &newRay, &intensity);
-		// 	if (newRay.type == ReflectedRay || newRay.type == TransmittedRay) {
-		// 		newRay.depth = ray->depth + 1;
-		// 	}
-		// }
+			if (Material_sampleRay(hit->material, ray, hit, &newRay, &intensity) && (newRay.type == ReflectedRay || newRay.type == TransmittedRay)) {
+				newRay.depth = ray->depth + 1;
+				Intersection newHit;
+				Intersection_init(&newHit);
+				Raytracing_compute(scene, &newRay, &newHit);
+				Color_mul(&newHit.shade, &intensity);
+				Color_add(&hit->shade, &newHit.shade);
+			}
+		}
+
 	} else {
 		hit->shade = scene->sky;
 	}

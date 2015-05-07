@@ -3,6 +3,8 @@
 #include "Mesh.h"
 #include "Instance.h"
 #include "LambertMaterial.h"
+#include "MetalMaterial.h"
+#include "DielectricMaterial.h"
 #include "PointLight.h"
 #include "DirectionalLight.h"
 #include "AreaLight.h"
@@ -42,6 +44,21 @@ Scene	*createScene2()
 
 	Object *lightMesh = Mesh_new();
 	Mesh_makeRectangle(lightMesh, 0.47f, 0.38f);
+
+	Color		mColor;
+	Color_setValues(&mColor, 1.0f, 1.0f, 1.0f, 1.0f);
+	Material	*metalMat = MetalMaterial_new(&mColor);
+	((MetalMaterial*)metalMat->data)->n = 0.177f;
+	((MetalMaterial*)metalMat->data)->k = 3.638f;
+	((MetalMaterial*)metalMat->data)->roughness = 0.0f;
+
+	Color		dColor;
+	Color_setValues(&dColor, 0.0f, 1.0f, 0.0f, 1.0f);
+	Material	*dielectricMat = DielectricMaterial_new();
+	((DielectricMaterial*)dielectricMat->data)->n = 1.45f;
+	((DielectricMaterial*)dielectricMat->data)->absorptionColor = dColor;
+	((DielectricMaterial*)dielectricMat->data)->absorptionCoef = 0.f;
+	((DielectricMaterial*)dielectricMat->data)->roughness = 0.f;
 
 	Mat4x4	m;
 	Vec3	tr;
@@ -100,13 +117,14 @@ Scene	*createScene2()
 	Vec3	lSphPos;
 	Vec3_setValues(&lSphPos, -0.4214f, 0.325f, -0.28f);
 	Object	*lSph = Sphere_new(&lSphPos, 0.325);
-	lSph->material = oWallMat;
+	lSph->material = metalMat;
+	// lSph->material = oWallMat;
 	Scene_addObject(scene, lSph);
 
 	Vec3	rSphPos;
 	Vec3_setValues(&rSphPos, 0.4458f, 0.325f, 0.37675f);
 	Object	*rSph = Sphere_new(&rSphPos, 0.325);
-	rSph->material = oWallMat;
+	rSph->material = dielectricMat;
 	Scene_addObject(scene, rSph);
 
 	Vec3	lPos;

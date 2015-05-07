@@ -19,6 +19,7 @@ typedef struct
 	Vec3	direction;
 	RayType	type;
 	int		depth;
+	float	refraction;
 }			Ray;
 
 Ray		*Ray_new(Vec3 *origin, Vec3 *direction, RayType type);

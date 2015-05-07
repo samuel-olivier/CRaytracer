@@ -117,8 +117,9 @@ Scene	*createScene2()
 	Vec3_setValues(&lV, 0.f, 0.f, 0.38f);
 	Color	lCol;
 	Color_setValues(&lCol, 1.f, 1.0f, 1.0f, 1.f);
-	Light	*light = AreaLight_new(&lCol, 3.f);
+	Light	*light = AreaLight_new(&lCol, 2.f);
 	AreaLight_makeRectangle(light, &lPos, &lU, &lV);
+	lightInst->light = light;
 	Scene_addLight(scene, light);
 	return scene;
 }

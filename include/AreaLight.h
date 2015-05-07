@@ -22,5 +22,6 @@ void	AreaLight_delete(AreaLight *this);
 void	AreaLight_makeRectangle(Light *this, Vec3 *position, Vec3 *u, Vec3 *v);
 
 float	AreaLight_illuminate(Light *this, Vec3 *pos, Color *col, Vec3 *toLight, Vec3 *ltPos);
+void	AreaLight_intersectionColor(Light *this, Color *color);
 
 #endif

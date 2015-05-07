@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "Utils.h"
+#include "Config.h"
 
 static void		AreaLight_deleteLight(void *this);
 
@@ -19,7 +20,9 @@ Light	*AreaLight_new(Color *color, float intensity)
 
 	Light	*this = Light_new();
 	this->data = data;
+	this->sampleNumber = LIGHT_SAMPLE_NUMBER;
 	this->illuminatePtr = &AreaLight_illuminate;
+	this->intersectionPtr = &AreaLight_intersectionColor;
 	this->deletePtr = &AreaLight_deleteLight;
 	return this;
 }
@@ -57,6 +60,14 @@ float	AreaLight_illuminate(Light *this, Vec3 *pos, Color *col, Vec3 *toLight, Ve
 	*col = areaLight->color;
 	float cosA = -Vec3_dot(toLight, &areaLight->normal);
 	return bright * maxf(cosA, 0.f);
+}
+
+void	AreaLight_intersectionColor(Light *this, Color *color)
+{
+	AreaLight	*areaLight = this->data;
+
+	*color = areaLight->color;
+	Color_scale(color, areaLight->intensity / M_PI);
 }
 
 static void	AreaLight_deleteLight(void *this)

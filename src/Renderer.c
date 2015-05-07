@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "Time.h"
+#include "Config.h"
+
 static void		setPixel(Renderer *this, int sampleNumber, int x, int y, Color *shade);
 static void		initImage(Renderer *this);
 
@@ -29,10 +32,12 @@ void		Renderer_render(Renderer *this)
 	Color			fill;
 	Intersection	hit;
 	Ray				ray;
+	Time			timer;
 
+	Time_init(&timer);
 	Color_init(&fill);
 	initImage(this);
-	for (int sampleNumber = 0;; ++sampleNumber) {
+	for (int sampleNumber = 0; sampleNumber < INTEGRATOR_SAMPLE_NUMBER; ++sampleNumber) {
 		for (int y = 0; y < this->output->height; ++y) {
 			for (int x = 0; x < this->output->width; ++x) {
 				float xF = ((float)x + 0.5f) / this->output->width;
@@ -47,12 +52,9 @@ void		Renderer_render(Renderer *this)
 				Color_clamp(&hit.shade);
 				setPixel(this, sampleNumber, x, y, &hit.shade);
 			}
-			// if (y % (this->output->height / 30) == 0) {
-			// 	Renderer_flushOutput(this);
-			// }
 		}
-		Renderer_flushOutput(this);
-		printf("Sample rendered\n");
+		// Renderer_flushOutput(this);
+		printf("Sample %d : %fs\n", sampleNumber, Time_update(&timer));
 	}
 }
 
@@ -77,6 +79,7 @@ static void		setPixel(Renderer *this, int sampleNumber, int x, int y, Color *sha
 	Color_copy(&this->image[idx], shade);
 	Color_scale(&this->image[idx], f);
 	Color_add(&this->image[idx], &c);
+	Image_putPixel(this->output, x, y, &this->image[idx]);	
 }
 
 static void		initImage(Renderer *this)

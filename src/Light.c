@@ -26,15 +26,10 @@ Light	*Light_init(Light *this)
 
 float	Light_illuminate(Light *this, Vec3 *pos, Color *col, Vec3 *toLight, Vec3 *ltPos)
 {
-	if (this->illuminatePtr != NULL) {
-		return this->illuminatePtr(this, pos, col, toLight, ltPos);
-	}
-	return 0;
+	return this->illuminatePtr(this, pos, col, toLight, ltPos);
 }
 
 void	Light_intersectionColor(Light *this, Color *color)
 {
-	if (this->intersectionPtr != NULL) {
-		this->intersectionPtr(this, color);
-	}
+	this->intersectionPtr(this, color);
 }

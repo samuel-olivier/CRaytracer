@@ -24,8 +24,5 @@ void	Object_delete(Object *this)
 
 int		Object_intersect(Object *this, Ray *ray, Intersection *hit)
 {
-	if (this->intersectPtr != NULL) {
-		return this->intersectPtr(this, ray, hit);
-	}
-	return 0;
+	return this->intersectPtr(this, ray, hit);
 }

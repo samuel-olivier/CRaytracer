@@ -24,8 +24,9 @@ int	main()
 	Renderer *renderer = Renderer_new();
 	renderer->output = mlx->displayImage;
 	renderer->scene = createScene2();
-	renderer->integrator = Integrator_new(Pathtracing);
+	renderer->integrator = Integrator_new(INTEGRATOR);
 	Thread_run(renderingThread, &threadRendering, renderer);
 	XContext_displayLoop(mlx, 30, NULL, NULL);
+	Thread_join(renderingThread);
   	return 0;
 }

@@ -21,19 +21,23 @@ void	Raytracing_compute(Scene *scene, Ray *ray, Intersection *hit)
 			Vec3_negate(&hit->normal);
 		}
 		LIST_FOREACH(scene->lights, it) {
-			Color 		color;
-			Vec3	 	toLight;
-			Vec3	 	lightPos;
-			float 		bright = Light_illuminate(it->data, &hit->position, &color, &toLight, &lightPos);
-			float 		cosTheta = Vec3_dot(&toLight, &hit->normal);
-			if (cosTheta >= EPSILON && bright >= EPSILON) {
-				if (!SHADOW_ENABLED || !isShaded(scene, &hit->position, &toLight, &lightPos)) {
-					Color materialColor;
-					Color_init(&materialColor);
-					Material_computeReflectance(hit->material, &materialColor, &toLight, ray, hit);
-					Color_scale(&materialColor, cosTheta * M_PI);
-					Color_mul(&color, &materialColor);
-					Color_addScaled(&hit->shade, &color, bright);
+			int		sampleNumber = ((Light*)it->data)->sampleNumber;
+			for (int i = 0; i < sampleNumber; ++i) {
+				Color 		color;
+				Vec3	 	toLight;
+				Vec3	 	lightPos;
+				float 		bright = Light_illuminate(it->data, &hit->position, &color, &toLight, &lightPos);
+				float 		cosTheta = Vec3_dot(&toLight, &hit->normal);
+
+				if (cosTheta >= EPSILON && bright >= EPSILON) {
+					if (!SHADOW_ENABLED || !isShaded(scene, &hit->position, &toLight, &lightPos)) {
+						Color materialColor;
+						Color_init(&materialColor);
+						Material_computeReflectance(hit->material, &materialColor, &toLight, ray, hit);
+						Color_scale(&materialColor, cosTheta * M_PI);
+						Color_mul(&color, &materialColor);
+						Color_addScaled(&hit->shade, &color, bright * 1.f / sampleNumber);
+					}
 				}
 			}
 		}

@@ -4,7 +4,7 @@ CC	= gcc
 
 RM	= rm -f
 
-CFLAGS	= -W -Wall -I include -std=c11 -O2 -I /usr/local/include/
+CFLAGS	= -W -Wall -I include -std=c11 -Ofast -O2 -I /usr/local/include/
 
 LDFLAGS	= -lmlx -lXext -lX11 -lm -lpthread
 

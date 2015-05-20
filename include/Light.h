@@ -12,7 +12,6 @@ typedef float	(*Light_IlluminateFunc)(struct sLight *this, Vec3 *pos, Color *col
 typedef void	(*Light_IntersectionFunc)(struct sLight *this, Color *color);
 typedef void	(*Light_DeleteFunc)(void *this);
 
-
 typedef struct						sLight
 {
 	void					*data;

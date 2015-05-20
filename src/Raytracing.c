@@ -17,9 +17,9 @@ void	Raytracing_compute(Scene *scene, Ray *ray, Intersection *hit)
 		if (hit->material == NULL) {
 			return ;
 		}
-		if (Vec3_dot(&hit->normal, &ray->direction) > 0) {
-			Vec3_negate(&hit->normal);
-		}
+		/* if (Vec3_dot(&hit->normal, &ray->direction) > 0) { */
+		/* 	Vec3_negate(&hit->normal); */
+		/* } */
 		LIST_FOREACH(scene->lights, it) {
 			int		sampleNumber = ((Light*)it->data)->sampleNumber;
 			for (int i = 0; i < sampleNumber; ++i) {
@@ -45,6 +45,7 @@ void	Raytracing_compute(Scene *scene, Ray *ray, Intersection *hit)
 			Ray		newRay;
 			Color	intensity;
 
+			newRay.refraction = ray->refraction;
 			if (Material_sampleRay(hit->material, ray, hit, &newRay, &intensity) && (newRay.type == ReflectedRay || newRay.type == TransmittedRay)) {
 				newRay.depth = ray->depth + 1;
 				Intersection newHit;

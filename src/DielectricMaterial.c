@@ -32,11 +32,10 @@ void		DielectricMaterial_delete(DielectricMaterial *this)
 void	DielectricMaterial_computeReflectance(Material *this, Color *col, Vec3 *in, Ray *ray, Intersection *hit)
 {
 	DielectricMaterial	*dielectric = this->data;
-
 	float ni = REFRACTION_INDEX;
 	float nt = dielectric->n;
 
-	if (absf(ray->refraction - REFRACTION_INDEX) > EPSILON) {
+	if (ray->refraction != REFRACTION_INDEX) {
 		swap(&ni, &nt);
 	}
 
@@ -56,20 +55,21 @@ void	DielectricMaterial_computeReflectance(Material *this, Color *col, Vec3 *in,
 int		DielectricMaterial_sampleRay(Material *this, Ray *ray, Intersection *hit, Ray *newRay, Color *intensity)
 {
 	DielectricMaterial	*dielectric = this->data;
-
 	float ni = REFRACTION_INDEX;
 	float nt = dielectric->n;
 	float absorption = 0.0f;
+	Vec3  n = hit->normal;
 
-	if (ray->refraction != REFRACTION_INDEX) {
+	if (Vec3_dot(&ray->direction, &n) > 0) {
+		Vec3_negate(&n);
 		swap(&ni, &nt);
 		absorption = dielectric->absorptionCoef;
 	}
-
 	Vec3	rays[2];
 	float	intensities[2];
-	int nbRay = Material_fresnelDielectric(&ray->direction, &hit->normal, ni, nt, rays, intensities);
+	int nbRay = Material_fresnelDielectric(&ray->direction, &n, ni, nt, rays, intensities);
 	float s = (float)rand() / RAND_MAX;
+
 	if (nbRay == 1 || (nbRay == 2 && s < intensities[0])) {
 		Color_setValues(intensity, 1.f, 1.f, 1.f, 1.f);
 		newRay->origin = hit->position;

@@ -55,7 +55,7 @@ Scene	*createScene2()
 	Color		dColor;
 	Color_setValues(&dColor, 0.0f, 1.0f, 0.0f, 1.0f);
 	Material	*dielectricMat = DielectricMaterial_new();
-	((DielectricMaterial*)dielectricMat->data)->n = 1.45f;
+	((DielectricMaterial*)dielectricMat->data)->n = 1.333f;
 	((DielectricMaterial*)dielectricMat->data)->absorptionColor = dColor;
 	((DielectricMaterial*)dielectricMat->data)->absorptionCoef = 0.f;
 	((DielectricMaterial*)dielectricMat->data)->roughness = 0.f;
@@ -65,7 +65,7 @@ Scene	*createScene2()
 
 	Object *ground = Instance_new(wall);
 	Mat4x4_toIdentity(&m);
-	Mat4x4_rotateX(&m, M_PI / 2.f);
+	Mat4x4_rotateX(&m, -M_PI / 2.f);
 	Instance_setMatrix(ground, &m);
 	ground->material = oWallMat;
 	Scene_addObject(scene, ground);
@@ -98,7 +98,7 @@ Scene	*createScene2()
 
 	Object *right = Instance_new(wall);
 	Mat4x4_toIdentity(&m);
-	Mat4x4_rotateY(&m, M_PI / 2.f);
+	Mat4x4_rotateY(&m, -M_PI / 2.f);
 	Vec3_setValues(&tr, 1.f, 0.8f, 0.f);
 	Mat4x4_translate(&m, &tr);
 	Instance_setMatrix(right, &m);
@@ -118,13 +118,14 @@ Scene	*createScene2()
 	Vec3_setValues(&lSphPos, -0.4214f, 0.325f, -0.28f);
 	Object	*lSph = Sphere_new(&lSphPos, 0.325);
 	lSph->material = metalMat;
-	// lSph->material = oWallMat;
+	/* lSph->material = oWallMat; */
 	Scene_addObject(scene, lSph);
 
 	Vec3	rSphPos;
 	Vec3_setValues(&rSphPos, 0.4458f, 0.325f, 0.37675f);
 	Object	*rSph = Sphere_new(&rSphPos, 0.325);
 	rSph->material = dielectricMat;
+	/* rSph->material = oWallMat; */
 	Scene_addObject(scene, rSph);
 
 	Vec3	lPos;

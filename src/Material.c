@@ -38,7 +38,6 @@ int		Material_sampleRay(Material *this, Ray *ray, Intersection *hit, Ray *newRay
 	return this->samplePtr(this, ray, hit, newRay, intensity);
 }
 
-
 void	Material_fresnelMetal(Vec3 *d, Vec3 *n, float nt, float kt, float *intensity, Vec3 *rayDirection)
 {
 	float ndd = Vec3_dot(n, d);
@@ -62,21 +61,16 @@ void	Material_fresnelMetal(Vec3 *d, Vec3 *n, float nt, float kt, float *intensit
 
 int		Material_fresnelDielectric(Vec3 *d, Vec3 *normal, float ni, float nt, Vec3 rays[2], float intensities[2])
 {
-	Vec3	n = *normal;
-	float ndd = Vec3_dot(&n, d);
-	if (ndd > -EPSILON && ndd < EPSILON) {
-		return 0;
-	}
-	if (ndd > 0) {
-		Vec3_negate(&n);
-		ndd *= -1;
-	}
+	float ndd = Vec3_dot(normal, d);
+	/* if (absf(ndd) < EPSILON) { */
+	/*   return 0; */
+	/* } */
 	Vec3	r = *d;
-	Vec3_addScaled(&r, &n, -2.f * ndd);
+	Vec3_addScaled(&r, normal, -2.f * ndd);
 	Vec3_normalize(&r);
 
 	Vec3	z = *d;
-	Vec3_addScaled(&z, &n, -ndd);
+	Vec3_addScaled(&z, normal, -ndd);
 	Vec3_scale(&z, ni / nt);
 	float z2 = Vec3_lengthSquared(&z);
 
@@ -87,14 +81,15 @@ int		Material_fresnelDielectric(Vec3 *d, Vec3 *normal, float ni, float nt, Vec3 
 	}
 
 	Vec3 t = z;
-	Vec3_addScaled(&t, &n, -sqrtf(1.f - z2));
+	Vec3_addScaled(&t, normal, -sqrtf(1.f - z2));
 	Vec3_normalize(&t);
 
-	float ndt = Vec3_dot(&n, &t);
+	float ndt = Vec3_dot(normal, &t);
 	float rPar = (nt * ndd - ni * ndt) / (nt * ndd + ni * ndt);
 	float rPerp = (ni * ndd - nt * ndt) / (ni * ndd + nt * ndt);
 	float fr = 0.5f * (rPar * rPar + rPerp * rPerp);
 
+	fr = 0.f;
 	rays[0] = r;
 	intensities[0] = fr;
 	rays[1] = t;
